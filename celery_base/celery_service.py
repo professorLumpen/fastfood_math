@@ -2,6 +2,8 @@ from typing import Any
 
 from celery.result import AsyncResult
 
+from celery_base.celery_app import celery_app
+
 
 class TaskService:
     def __init__(self, celery_app):
@@ -29,3 +31,7 @@ class TaskService:
             return result.status, result.get()
 
         return result.status, None
+
+
+async def get_task_service():
+    yield TaskService(celery_app)
