@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from app.schemas import FibonacciNumber, FibonacciCreated, FibonacciGetOrder, FibonacciResult
+from app.schemas import FibonacciNumber, FibonacciCreated, FibonacciResult
 from celery_base.celery_service import TaskService, get_task_service
 from celery_base.tasks import very_slow_calculate_fibonacci
 
@@ -9,14 +9,14 @@ fibonacci_router = APIRouter(prefix="/fibonacci", tags=["fibonacci"])
 
 
 @fibonacci_router.get(
-    "/",
+    "/{order_id}/",
     response_model=FibonacciResult,
 )
 async def get_fibonacci_result(
-    order_info: FibonacciGetOrder,
+    order_id: str,
     task_service: TaskService = Depends(get_task_service),
 ):
-    status, result = task_service.fetch_result(order_info.order_id)
+    status, result = task_service.fetch_result(order_id)
 
     response = {
         "order_status": status,

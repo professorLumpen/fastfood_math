@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class FibonacciNumber(BaseModel):
-    number: int
+    number: int = Field(..., ge=1)
 
 
 class FibonacciCreated(BaseModel):
@@ -10,10 +10,6 @@ class FibonacciCreated(BaseModel):
     message: str
 
 
-class FibonacciGetOrder(BaseModel):
-    order_id: str
-
-
 class FibonacciResult(BaseModel):
     order_status: str
-    result: str | None = None
+    result: int | None = None
