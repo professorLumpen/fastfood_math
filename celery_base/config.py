@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     def rabbit_url(self):
         return f"amqp://{self.RABBIT_USER}:{self.RABBIT_PASSWORD}@{self.RABBIT_HOST}//"
 
+    @property
     def redis_url(self):
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/0"
 
