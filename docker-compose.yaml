@@ -28,7 +28,7 @@ services:
     build: .
     env_file:
       - .env
-    command: celery --app=celery_base.celery_app:celery_app worker --pool=solo
+    command: celery --app=celery_base.celery_app:celery_app worker -c 4
     depends_on:
       - app
   celery_flower:
