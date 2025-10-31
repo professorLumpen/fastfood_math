@@ -19,9 +19,18 @@ services:
       - "${APP_PORT}:${APP_PORT}"
     env_file:
       - .env
+    command: >
+      sh -c "uvicorn main:app --reload --host ${APP_HOST} --port ${APP_PORT}"
     depends_on:
       - rabbitmq
       - redis
+  celery_worker:
+    build: .
+    env_file:
+      - .env
+    command: celery --app=celery_base.celery_app:celery_app worker --pool=solo
+    depends_on:
+      - app
 
 volumes:
   rmq_data:
