@@ -31,6 +31,15 @@ services:
     command: celery --app=celery_base.celery_app:celery_app worker --pool=solo
     depends_on:
       - app
+  celery_flower:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "${FLOWER_HOST_PORT}:${FLOWER_CONTAINER_PORT}"
+    command: celery --app=celery_base.celery_app:celery_app flower --port=${FLOWER_CONTAINER_PORT}
+    depends_on:
+      - celery_worker
 
 volumes:
   rmq_data:
